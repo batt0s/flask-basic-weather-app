@@ -28,3 +28,5 @@ Now you can run the app :
 > python3 run.py
 
 in your shell. 
+<br><br>
+[Video of app](https://youtu.be/pYBy7b8L_Is)
