@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <title>Weather</title>
+</head>
+<body>
+
+    <h3 style="padding-left: 3%;">What's weather like ?</h3>
+
+
+    <!--flash messages-->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="col s12 m7" id="message">
+                <div class="card horizontal">
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>{{ message }} <button id="close" class="material-icons" style="float:right;">close</button></p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+    
+    <!--form for adding city-->
+    <form method="POST">
+        <div class="input-field col s6" style="padding: 3%;">
+            <input id="city_name" type="text" class="validate" name="city" placeholder="City Name">
+            <button class="waves-effect waves-light btn" type="submit">Add</button>
+        </div>
+    </form>
+
+
+    <!--city card-->
+    {% if weather_data %}
+        {% for weather in weather_data %}
+        <div class="col s12 m7">
+            <div class="card horizontal">
+            <div class="card-image">
+                <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png">
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <h3 class="header">{{ weather.city }}</h3>
+                    <p>{{ weather.temp }} C</p>
+                    <p>{{ weather.description }}</p>
+                </div>
+                <div class="card-action">
+                    <a href="/delete/{{ weather.city }}">Delete</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+
+
+
+
+    <script>
+        $(document).ready(function(){
+            $("#close").click(function(){
+              $("#message").remove();
+            });
+          });
+    </script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>
